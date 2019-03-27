@@ -1,0 +1,71 @@
+﻿@model Priyarank.Models.MatchDTO
+@{ 
+    ViewData["Title"] = "Arena";
+    var alpha = Model.Team1;
+    var beta = Model.Team2;
+}
+
+<style>
+.btn {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  cursor: pointer;
+  font-size: 24px;
+  display: inline-block;
+  color: dodgerblue;
+}
+.btn:hover {background: #eee;}
+
+.smol {
+    font-size: 16px;
+    padding: 7px 14px;
+}
+</style>
+
+<table align="center">
+<tr>
+    <td align="center" colspan="3">
+        <h2>Who would win in the full strength matchup of</h2>
+        <br />
+    </td>
+</tr>
+
+<tr>
+    <td width="40%" align="right">
+        <font size="5">
+            <input type="button" class="btn" value="@alpha" onclick="location.href='@Url.Action("Resolve", "Home", new { id = Model.ID, winner = Model.ID1, loser=Model.ID2, draw = 0})'"/>
+        </font>
+        @*<br />
+            @String.Format("{0}-{1}-{2}", alpha.wins, alpha.losses, alpha.draws)*@
+        <br />
+    </td>
+
+    <td align="center">
+        vs.
+    </td>
+
+    <td width="40%" align="left">
+        <font size="5">
+            <input type="button" class="btn" value="@beta" onclick="location.href='@Url.Action("Resolve", "Home", new { id = Model.ID, winner = Model.ID2, loser=Model.ID1, draw = 0})'" />
+        </font>
+        @*<br />
+            @String.Format("{0}-{1}-{2}", beta.wins, beta.losses, beta.draws)*@
+        <br />
+    </td>
+</tr>
+<tr>
+    <td align="center" colspan="3">
+        <input type ="button" class="btn smol" value="Too close to tell." onclick="location.href='@Url.Action("Resolve", "Home", new { id = Model.ID, winner = Model.ID1, loser=Model.ID2, draw = 1})'" />   
+        <br />
+    </td>
+</tr>
+<tr>
+    <td align="center" colspan="3">
+        <input type="button" class="btn  smol" value="I want a different match instead." onclick="location.href='@Url.Action("Rank", "Home")'" />
+        <br /><br />
+    </td>
+</tr>
+
+</table>
+
