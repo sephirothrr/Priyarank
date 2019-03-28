@@ -1,0 +1,52 @@
+﻿@model Dictionary<string, Dictionary<string, int>>
+@{
+    var keys = new List<string>(Model.Keys);
+    keys.Sort();
+}
+
+<h4>Matchup detail for @ViewData["Title"]</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Opponent
+                @*@Html.DisplayNameFor(model => model.Timestamp)*@
+            </th>
+            <th>
+                Wins
+                @*@Html.DisplayNameFor(model => model.Team1)*@
+            </th>
+            <th>
+                Losses
+                @*@//Html.DisplayNameFor(model => model.Team2)*@
+            </th>
+            <th>
+                Draws
+            </th>
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var key in keys)
+        {
+        <tr>
+            <td>
+                <a href=@Url.Action("Team", "Home", new { Name = key.ToString() })>@key.ToString()</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[key]["wins"])
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[key]["losses"])
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[key]["draws"])
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

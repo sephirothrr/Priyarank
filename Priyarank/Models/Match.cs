@@ -14,6 +14,7 @@ namespace Priyarank.Models
         public bool _played { get; set; }
         public DateTime created { get; set; }
         public DateTime _playedOn { get; set; }
+        public bool draw { get; set; }
 
         public Match()
         {
@@ -36,7 +37,7 @@ namespace Priyarank.Models
             this.loser = l;
             Team.AdjustElo(this.winner, this.loser);
             this._played = true;
-            this._playedOn = DateTime.Now;
+            this._playedOn = DateTime.UtcNow;
             return true;
         }
     }

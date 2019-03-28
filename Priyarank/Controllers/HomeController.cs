@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace Priyarank.Controllers
                 beta.Draws++;
                 alpha.Elo += Convert.ToInt16((32.0 * (0.5 - eA)));
                 beta.Elo += Convert.ToInt16((32.0 * (0.5 - eB)));
-
+                m.draw = true;
             }
             else
             {
@@ -72,7 +73,7 @@ namespace Priyarank.Controllers
                 beta.Elo += Convert.ToInt16((32.0 * (0.0 - eB)));
             }
             m._played = true;
-            m._playedOn = DateTime.Now;
+            m._playedOn = DateTime.UtcNow;
             m.winner = alpha;
             m.loser = beta;
             _context.Entry(alpha).State = EntityState.Modified;
@@ -82,6 +83,38 @@ namespace Priyarank.Controllers
 
             return RedirectToAction("Rank");
             //return View("Rank", await ResolveRankView());
+        }
+
+        public async Task<IActionResult> Team(string Name)
+        {
+            Team team = await _context.Team.Where(t => t.Name == Name).FirstOrDefaultAsync();
+            var matches = await _context.Match.Where(m => (m._played == true) && (m.winner != null) && (m.loser != null) && (m.Team1.Id == team.Id || m.Team2.Id == team.Id)).OrderBy(m => m._playedOn).Select(m => new MatchDTO
+            {
+                //ID = m.Id,
+                Team1 = m.winner.Name,
+                //ID1 = m.winner.Id,
+                Team2 = m.loser.Name,
+                //ID2 = m.loser.Id,
+                Timestamp = m._playedOn,
+                draw = m.draw
+            }).ToListAsync();
+
+            Dictionary<string, Dictionary<string, int>> d = new Dictionary<string, Dictionary<string, int>>();
+
+            foreach (var mm in matches)
+            {
+                var opp = mm.Team1 == Name ? mm.Team2 : mm.Team1;
+                if (!d.ContainsKey(opp))
+                {
+                    d.TryAdd(opp, new Dictionary<string, int>());
+                    d[opp].TryAdd("wins", 0);
+                    d[opp].TryAdd("losses", 0);
+                    d[opp].TryAdd("draws", 0);
+                }
+                d[opp][mm.draw ? "draws" : opp == mm.Team1 ? "losses" : "wins"]++;
+            }
+            ViewData["Title"] = Name;
+            return View(d);
         }
 
 

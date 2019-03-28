@@ -47,8 +47,9 @@ namespace Priyarank.Migrations
                     winnerId = table.Column<Guid>(nullable: true),
                     loserId = table.Column<Guid>(nullable: true),
                     _played = table.Column<bool>(nullable: false),
-                    created = table.Column<DateTime>(nullable: false, defaultValue: DateTime.Now),
-                    _playedOn = table.Column<DateTime>(nullable: false)
+                    created = table.Column<DateTime>(nullable: false, defaultValue: DateTime.UtcNow),
+                    _playedOn = table.Column<DateTime>(nullable: false),
+                    draw = table.Column<bool>(nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {

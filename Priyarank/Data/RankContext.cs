@@ -26,10 +26,13 @@ namespace Priyarank.Data
                 .HasDefaultValue(1200);
             builder.Entity<Match>()
                 .Property(m => m.created)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValue(DateTime.UtcNow);
             builder.Entity<Match>()
                 .Property(m => m.Id)
                 .HasDefaultValue(Guid.NewGuid());
+            builder.Entity<Match>()
+                .Property(m => m.draw)
+                .HasDefaultValue(false);
             builder.Entity<Team>()
                 .Property(t => t.Id)
                 .HasDefaultValue(Guid.NewGuid());
@@ -40,6 +43,7 @@ namespace Priyarank.Data
         public DbSet<Match> Match { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
+        public DbSet<Priyarank.Models.MatchDTO> MatchDTO { get; set; }
     }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -12,5 +12,14 @@ namespace Priyarank.Models
         public Guid ID1 {get; set;}
         public String Team2 { get; set; }
         public Guid ID2 { get; set; }
+        public DateTime Timestamp { get; set; }
+        public bool draw { get; set; }
+
+        //public MatchDTO()
+        //{
+           
+        //}
     }
+
+
 }

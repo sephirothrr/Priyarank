@@ -40,7 +40,7 @@
                     @{i++;}
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a href=@Url.Action("Team", "Home", new { Name = item.Name.ToString() })>@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                         @Html.DisplayFor(modelItem => item.Elo)
