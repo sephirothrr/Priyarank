@@ -38,7 +38,7 @@ namespace Priyarank
 
             services.AddDbContext<RankContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("PriyarankContext")));
+                    Configuration.GetConnectionString("RankContext")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<RankContext>();
@@ -66,13 +66,14 @@ namespace Priyarank
 
             app.UseMvc(routes =>
             {
-                //routes.MapRoute(
-                //    name: "default",
-                //    template: "{controller=Home}/{action=Index}/{id?}/{status?}");
                 routes.MapRoute(
-                    name: "default",
+                    name: "root",
                     template: "{action}/{id?}/{status?}",
                     defaults: new { controller = "Home", action = "Index" });
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}/{status?}");
+                
             });
         }
     }

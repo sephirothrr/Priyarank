@@ -35,22 +35,24 @@ namespace Priyarank.Data
                 .HasDefaultValue(Guid.NewGuid());
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json")
-                   .Build();
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
 
         //public DbSet<Tournament> Tournament { get; set; }
         public DbSet<Match> Match { get; set; }
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
     }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+                //{
+                //    if (!optionsBuilder.IsConfigured)
+                //    {
+                //        IConfigurationRoot configuration = new ConfigurationBuilder()
+                //           .SetBasePath(Directory.GetCurrentDirectory())
+                //           .AddJsonFile("appsettings.json")
+                //           .Build();
+                //        var connectionString = configuration.GetConnectionString("RankContext");
+                //        optionsBuilder.UseSqlServer(connectionString);
+                //    }
+                //}
 }
+        

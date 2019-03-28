@@ -73,6 +73,8 @@ namespace Priyarank.Controllers
             }
             m._played = true;
             m._playedOn = DateTime.Now;
+            m.winner = alpha;
+            m.loser = beta;
             _context.Entry(alpha).State = EntityState.Modified;
             _context.Entry(beta).State = EntityState.Modified;
             _context.Entry(m).State = EntityState.Modified;

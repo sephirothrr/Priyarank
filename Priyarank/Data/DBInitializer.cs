@@ -13,7 +13,7 @@ namespace Priyarank.Data
     {
         public static void Initialize(RankContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.EnsureCreatedAsync();
 
             if (context.Team.Any())
             {
